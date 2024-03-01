@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TeamsExport;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 
 class TeamController extends Controller
 {
@@ -60,7 +65,7 @@ class TeamController extends Controller
 
         $team = \App\Models\Team::find($request->teamId);
         $team->name = $request->teamName;
-    
+
         // seaerch for the department id with the given name
         $department = \App\Models\Department::where('name', $request->department_name)->first();
         $team->department_id = $department->id;
@@ -78,7 +83,32 @@ class TeamController extends Controller
 
         $team = \App\Models\Team::find($request->teamId);
         $team->delete();
-        
+
         return redirect()->route('team.index')->with('success', 'Team has been deleted');
+    }
+
+    public function search()
+    {
+        $teams = \App\Models\Team::all();
+
+        return view('team.search', ['teams' => $teams]);
+    }
+
+    public function searchResult(Request $request)
+    {
+        $keyword = $request->teamId;
+        $teamSearch = \App\Models\Team::where('id', 'like', '%' . $keyword . '%')->paginate(5);
+
+        return view('team.searchResult', ['teamSearch' => $teamSearch]);
+    }
+
+    public function export(Request $request)
+    {
+        // export search results to a csv file
+        // dd($request->all());
+        $keyword = $request->teamId;
+        $teams = \App\Models\Team::where('id', 'like', '%' . $keyword . '%')->get();
+
+        return Excel::download(new TeamsExport($teams), 'searchResultTeam.csv');
     }
 }

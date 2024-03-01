@@ -80,6 +80,8 @@
                                         href="{{ route('team.edit') }}">Sửa</a>
                                     <button class="bg-red-500 text-white px-6 py-2" type="submit">Xóa</button>
                                 </div>
+
+                                <a href="{{ route('team.search') }}" class="text-white bg-gray-600 px-6 py-2">Tìm kiếm</a>
                             </div>
                         </form>
                     </div>

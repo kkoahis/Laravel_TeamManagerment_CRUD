@@ -24,6 +24,9 @@ Route::put('/team/edit', [TeamController::class, 'update'])->name('team.update')
 
 Route::delete('/team/delete', [TeamController::class, 'delete'])->name('team.delete');
 
+Route::get('/team/search', [TeamController::class, 'search'])->name('team.search');
+Route::get('/team/search-result', [TeamController::class, 'searchResult'])->name('team.searchResult');
+Route::get('/team/export', [TeamController::class, 'export'])->name('team.export');
 
 
 
