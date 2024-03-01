@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TeamsExport;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 
 class TeamController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $teams = \App\Models\Team::all();
+        // Log::info(Json_encode($request->all()));
+        $sortBy = $request->get('sort', 'id');
+        $sortOrder = $request->get('order', 'asc');
+
+        $teams = \App\Models\Team::orderBy($sortBy, $sortOrder)->get();
 
         return view('team.index', compact('teams'));
     }
+
 
     public function add()
     {

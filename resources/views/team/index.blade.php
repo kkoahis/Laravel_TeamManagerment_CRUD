@@ -23,7 +23,11 @@
                             <table class="min-w-full bg-white border border-gray-700">
                                 <thead>
                                     <tr>
-                                        <th class="py-2 px-4 border-b border-gray-700">Mã Team</th>
+                                        <th class="py-2 px-4 border-b border-gray-700">
+                                            <a href="{{ route('team.index', ['sort' => 'id', 'order' => request('order') === 'desc' ? 'asc' : 'desc']) }}">
+                                                Mã Team
+                                            </a>
+                                        </th>
                                         <th class="py-2 px-4 border-b border-gray-700">Tên Team</th>
                                         <th class="py-2 px-4 border-b border-gray-700">Tên Bộ Phận</th>
                                     </tr>

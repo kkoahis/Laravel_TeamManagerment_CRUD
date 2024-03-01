@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="mt-10 flex">
-                            {{ $teamSearch->links() }}
+                            {{ $teamSearch->appends(request()->input())->links() }}
                         </div>
                     </div>
 
